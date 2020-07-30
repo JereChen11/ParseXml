@@ -1,6 +1,9 @@
 package com.jere.parsexml
 
-class User() {
+/**
+ * @author jere
+ */
+class User {
     var name: String = ""
     var age: Int = 0
 }
