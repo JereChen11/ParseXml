@@ -40,7 +40,7 @@ class XmlPullParseTestActivity : AppCompatActivity() {
 
             //一直循环解析，直到解析到XML文档结束节点
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                //返回当前元素的名称，如 START_TAG，END_TAG
+                //启动了命名空间，所以将返回当前元素的本地名称，如 "Users", "user", "name", "age"
                 val tagName = parser.name
                 when (eventType) {
                     XmlPullParser.START_TAG -> {

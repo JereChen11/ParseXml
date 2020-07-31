@@ -58,7 +58,22 @@ class SaxParseActivity : AppCompatActivity() {
         var currentElement = false
 
         /**
-         * 开始接收元素
+         * 接收文档开始的通知
+         */
+        override fun startDocument() {
+            super.startDocument()
+        }
+
+        /**
+         * 接收文档结尾的通知
+         */
+        override fun endDocument() {
+            super.endDocument()
+        }
+
+        /**
+         * 接收元素开始的通知
+         * localName: 返回我们定义的标签，即："Users","user", "name", "age"
          */
         override fun startElement(
             uri: String?,
@@ -76,26 +91,32 @@ class SaxParseActivity : AppCompatActivity() {
         }
 
         /**
-         * 当前元素解析完毕
+         * 接收元素结束的通知
+         * localName: 返回我们定义的标签，即："Users","user", "name", "age"
          */
         override fun endElement(uri: String?, localName: String?, qName: String?) {
             super.endElement(uri, localName, qName)
+            //当前元素解析完成
             currentElement = false
             when(localName) {
                 NAME_TAG -> user.name = currentValue
                 AGE_TAG -> user.age = currentValue.toInt()
-                //当前元素解析好后，即第一个 user 节点解析好后，加入到 userList
+                //即第一个 user 节点解析好后，加入到 userList
                 USER_TAG -> userList.add(user)
             }
 
         }
 
         /**
-         * 解析元素
+         * 接收元素内部字符数据的通知
+         * ch: 返回标签内的内容，以 char[] 的形式存储
+         * start: ch的起始Index, 即为0
+         * length: ch数组的长度
          */
         override fun characters(ch: CharArray?, start: Int, length: Int) {
             super.characters(ch, start, length)
             if (currentElement) {
+                //以String的形式返回标签内的内容
                 currentValue += String(ch!!, start, length)
             }
         }
